@@ -23,7 +23,7 @@ public class AccountDto {
 
     private String departmentName;
 
-//    private String positionName;
+    private String positionName;
 
 
 }

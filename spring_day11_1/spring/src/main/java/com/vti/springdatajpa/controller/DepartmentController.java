@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "api/v1/department")
-@CrossOrigin("*")
 public class DepartmentController {
 
     @Autowired
@@ -28,6 +28,12 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getDepartmentById(@PathVariable(name = "id") int id) {
         return new ResponseEntity<>(departmentService.getDepartmentById(id), HttpStatus.OK);
+    }
+
+    //get department by name
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> getDepartmentByName(@PathVariable(name = "name") String name){
+        return new ResponseEntity<>(departmentService.getDepartmentByName(name), HttpStatus.OK);
     }
 
     //create department

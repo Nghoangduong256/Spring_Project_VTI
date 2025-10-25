@@ -10,10 +10,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PositionDto {
 
-    private int id;
-
     private String name;
-
-
 
 }

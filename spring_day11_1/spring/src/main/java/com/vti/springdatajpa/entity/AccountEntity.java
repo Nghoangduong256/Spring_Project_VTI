@@ -8,7 +8,7 @@ import javax.swing.text.Position;
 import java.util.Date;
 
 @Data
-@Table(name = "Account", catalog = "TestingSystem3")
+@Table(name = "Account")
 @Entity
 public class AccountEntity {
 
@@ -27,7 +27,10 @@ public class AccountEntity {
     private String fullName;
 
     @Column(name = "department_id", nullable = false)
-    private int department;
+    private int departmentId;
+
+    @Column(name = "position_id", nullable = false)
+    private int positionId;
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,4 +39,8 @@ public class AccountEntity {
 
     @Column(name = "password", length = 500, nullable = false)
     private String password;
+
+    // role permission
+    @Column(name = "role")
+    private String role = "USER";
 }

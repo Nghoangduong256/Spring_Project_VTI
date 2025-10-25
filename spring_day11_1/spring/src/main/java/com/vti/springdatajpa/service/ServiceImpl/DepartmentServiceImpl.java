@@ -2,6 +2,7 @@ package com.vti.springdatajpa.service.ServiceImpl;
 
 import com.vti.springdatajpa.dto.DepartmentDto;
 import com.vti.springdatajpa.entity.DepartmentEntity;
+import com.vti.springdatajpa.entity.PositionName;
 import com.vti.springdatajpa.repository.DepartmentRepository;
 import com.vti.springdatajpa.service.DepartmentService;
 import org.modelmapper.ModelMapper;
@@ -21,20 +22,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<DepartmentDto> getAllDepertment() {
-        List<DepartmentEntity> departmentList = departmentRepository.findAll();
-        List<DepartmentDto> departmentDtoList = new ArrayList<>();
-        for (DepartmentEntity departmentEntity : departmentList){
-            DepartmentDto departmentDto = modelMapper.map(departmentEntity, DepartmentDto.class);
-            departmentDtoList.add(departmentDto);
-        }
-        return departmentDtoList;
+    public List<DepartmentEntity> getAllDepertment() {
+        return departmentRepository.findAll();
     }
 
     @Override
-    public DepartmentDto getDepartmentById(int id) {
-        DepartmentEntity departmentEntity = departmentRepository.findById(id).orElseThrow();
-        return modelMapper.map(departmentEntity, DepartmentDto.class);
+    public DepartmentEntity getDepartmentById(int id) {
+        return departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Department not found"));
+    }
+
+    @Override
+    public List<DepartmentEntity> getDepartmentByName(String name) {
+        return departmentRepository.findByName(name);
     }
 
     @Override
@@ -46,10 +45,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void updateDepartment(DepartmentDto departmentDto, int id) {
+        //validate
         DepartmentEntity departmentEntity = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Department not found")) ;
 
         // Thiết lập trường cần update
         departmentEntity.setName(departmentDto.getName());
+        departmentEntity.setTotalMember(departmentDto.getTotalMember());
 
         DepartmentEntity updated = departmentRepository.save(departmentEntity);
         modelMapper.map(updated, DepartmentDto.class);
@@ -57,6 +58,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void deleteDepartment(int id) {
+        //validate
         if (!departmentRepository.existsById(id)){
             throw new RuntimeException("Department not found");
         }

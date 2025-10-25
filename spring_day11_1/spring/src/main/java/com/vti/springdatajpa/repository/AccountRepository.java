@@ -12,18 +12,27 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
         , JpaSpecificationExecutor<AccountEntity> {
 
-    @Query(value = "select a.id, a.username, a.full_name, d.name"
-            + " from Account a"
-            + " left join Department d on a.department_id = d.id"
+    @Query(value = "SELECT a.id, a.username, a.full_name, d.name AS department_name, p.name AS position_name"
+            + " FROM Account a"
+            + " LEFT JOIN Department d ON a.department_id = d.id"
+            + " LEFT JOIN Position p ON a.position_id = p.id"
             , nativeQuery = true)
     List<Object[]> findAllAccount();
 
-    @Query(value = "select a.id as Account_id, a.username, a.full_name, d.name as department_name"
-                    + " from Account a"
-                    + " left join department d on a.department_id = d.id"
-                    + " where a.id = :id", nativeQuery = true)
+    @Query(value = "SELECT a.id, a.username, a.full_name, d.name AS department_name, p.name AS position_name"
+            + " FROM Account a"
+            + " LEFT JOIN Department d ON a.department_id = d.id"
+            + " LEFT JOIN Position p ON a.position_id = p.id"
+            + " where a.id = :id"
+            , nativeQuery = true)
     Object findByAccountId(@Param("id") int id);
 
-
+    @Query(value = "SELECT a.id, a.username, a.full_name, d.name AS department_name, p.name AS position_name"
+            + " FROM Account a"
+            + " LEFT JOIN Department d ON a.department_id = d.id"
+            + " LEFT JOIN Position p ON a.position_id = p.id"
+            + " where a.username like %:name% or a.full_name like %:name%"
+            , nativeQuery = true)
+    List<Object[]> findByAccountName(@Param("name") String name);
 
 }

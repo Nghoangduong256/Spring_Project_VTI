@@ -6,11 +6,13 @@ import com.vti.springdatajpa.entity.DepartmentEntity;
 import java.util.List;
 
 public interface DepartmentService {
-    public List<DepartmentDto> getAllDepertment ();
+    public List<DepartmentEntity> getAllDepertment();
 
-    public DepartmentDto getDepartmentById(int id);
+    public DepartmentEntity getDepartmentById(int id);
 
-    public DepartmentDto createDepartment (DepartmentDto departmentDto);
+    public List<DepartmentEntity> getDepartmentByName(String name);
+
+    public DepartmentDto createDepartment(DepartmentDto departmentDto);
 
     public void updateDepartment(DepartmentDto departmentDto, int id);
 

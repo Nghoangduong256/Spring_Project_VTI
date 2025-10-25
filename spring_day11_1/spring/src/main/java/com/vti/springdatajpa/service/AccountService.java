@@ -2,6 +2,7 @@ package com.vti.springdatajpa.service;
 
 import com.vti.springdatajpa.dto.AccountDto;
 import com.vti.springdatajpa.entity.AccountEntity;
+import com.vti.springdatajpa.form.CreateAccountForm;
 
 import java.util.List;
 
@@ -10,9 +11,11 @@ public interface AccountService {
 
     public AccountDto getAccountByID(int id);
 
-    public AccountEntity createAccount(AccountEntity accountEntity);
+    public List<AccountDto> getAccountByName(String name);
 
-    public void updateAccount(AccountDto accountDto, int id);
+    public AccountDto createAccount(CreateAccountForm createAccountForm);
 
-    public void deleteAccount(int id);
+    public void updateAccount(CreateAccountForm createAccountForm, int id);
+
+    public void deleteAccountById(int id);
 }
